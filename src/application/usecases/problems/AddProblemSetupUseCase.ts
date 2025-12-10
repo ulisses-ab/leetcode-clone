@@ -4,7 +4,7 @@ import { mapProblemSetupToDTO } from "../../mappers/mapProblemSetupToDTO";
 import { Language } from "../../../domain/types/Language";
 import { IProblemRepo } from "../../../domain/repos/IProblemRepo";
 import { IUserRepo } from "../../../domain/repos/IUserRepo";
-import { IUUIDService } from "../../services/IUUIDService";
+import { IUUIDService } from "../../services/interfaces/IUUIDService";
 import { AppError } from "../../errors/AppError";
 import { ErrorCode } from "../../errors/ErrorCode";
 import { Role } from "../../../domain/types/Role";

@@ -1,5 +1,5 @@
 import { IProblemRepo } from "../../../domain/repos/IProblemRepo";
-import { IObjectStorageService } from "../../services/IObjectStorageService";
+import { IObjectStorageService } from "../../services/interfaces/IObjectStorageService";
 import { AppError } from "../../errors/AppError";
 import { ErrorCode } from "../../errors/ErrorCode";
 

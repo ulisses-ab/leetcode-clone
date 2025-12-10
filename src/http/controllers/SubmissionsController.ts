@@ -1,7 +1,7 @@
 import { FetchExecutionFilesUseCase } from '../../application/usecases/execution/FetchExecutionFilesUseCase';
 import { SubmitExecutionResultsUseCase } from '../../application/usecases/execution/SubmitExecutionResultsUseCase';
 import { GetSubmissionUseCase } from '../../application/usecases/submissions/GetSubmissionUseCase';
-import { GetSubmissioWithResultsUseCase } from '../../application/usecases/submissions/GetSubmissionWithResultsUseCase'
+import { GetSubmissionWithResultsUseCase } from '../../application/usecases/submissions/GetSubmissionWithResultsUseCase'
 import { MakeSubmissionUseCase } from '../../application/usecases/submissions/MakeSubmissionUseCase';
 import { GetAllSubmissionsForSetupUseCase } from '../../application/usecases/submissions/GetAllSubmissionsForSetupUseCase';
 import { Request, Response } from 'express';
@@ -14,7 +14,7 @@ export class SubmissionsController {
     private getSubmissionUseCase: GetSubmissionUseCase,
     private fetchExecutionFilesUseCase: FetchExecutionFilesUseCase,
     private submitExecutionResultsUseCase: SubmitExecutionResultsUseCase,
-    private getSubmissionWithResultsUseCase: GetSubmissioWithResultsUseCase,
+    private getSubmissionWithResultsUseCase: GetSubmissionWithResultsUseCase,
     private getAllSubmissionsForSetupUseCase: GetAllSubmissionsForSetupUseCase,
   ) {}
 

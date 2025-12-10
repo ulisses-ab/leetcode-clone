@@ -3,7 +3,7 @@ import { Request, Response } from 'express';
 import { handleError } from "../errors/handleError";
 import { AuthenticatedRequest } from "../middleware/authMiddleware";
 
-export class UserController {
+export class UsersController {
   constructor(
     private getUserUseCase: GetUserUseCase,
   ) {}

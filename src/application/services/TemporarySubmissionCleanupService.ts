@@ -1,5 +1,5 @@
 import { ISubmissionRepo } from "../../domain/repos/ISubmissionRepo";
-import { IObjectStorageService } from "../services/IObjectStorageService";
+import { IObjectStorageService } from "./interfaces/IObjectStorageService";
 import { SubmissionStatus } from "../../domain/types/SubmissionStatus";
 
 export class TemporarySubmissionCleanupService {

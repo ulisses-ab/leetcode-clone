@@ -10,7 +10,7 @@ export class SubmissionTimeoutService {
     const now = new Date();
     const timeoutDate = new Date(now.getTime() - timeoutInMs);
 
-    const timedOutSubmissions = await this.submissionRepo.findAllByStatusBeforeDate(SubmissionStatus.PENDING);
+    const timedOutSubmissions = await this.submissionRepo.findAllByStatusBeforeDate(SubmissionStatus.PENDING, timeoutDate);
 
     for (const submission of timedOutSubmissions) {
       submission.status = SubmissionStatus.FAILED;

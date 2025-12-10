@@ -29,7 +29,7 @@ model Problem {
   id        String         @id @default(cuid())
   title     String
   statement String
-  difficulty Difficulty
+  difficulty String
   creator   User           @relation("CreatedProblems", fields: [creatorId], references: [id])
   creatorId String
   setups    ProblemSetup[]

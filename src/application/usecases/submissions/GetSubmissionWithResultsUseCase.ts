@@ -3,25 +3,25 @@ import { ISubmissionRepo } from "../../../domain/repos/ISubmissionRepo";
 import { AppError } from "../../errors/AppError";
 import { ErrorCode } from "../../errors/ErrorCode";
 import { mapSubmissionToDTO } from "../../mappers/mapSubmissionToDTO";
-import { IObjectStorageService } from "../../services/IObjectStorageService";
+import { IObjectStorageService } from "../../services/interfaces/IObjectStorageService";
 
-export type GetSubmissioWithResultsInput = {
+export type GetSubmissionWithResultsInput = {
   userId: string,
   submissionId: string,
 }
 
-export type GetSubmissioWithResultsOutput = {
+export type GetSubmissionWithResultsOutput = {
   submission: SubmissionDTO,
   results: unknown | null,
 }
 
-export class GetSubmissioWithResultsUseCase {
+export class GetSubmissionWithResultsUseCase {
   constructor(
     private submissionRepo: ISubmissionRepo,
     private objectStorageService: IObjectStorageService,
   ) {}
 
-  public async execute(input: GetSubmissioWithResultsInput): Promise<GetSubmissioWithResultsOutput> {
+  public async execute(input: GetSubmissionWithResultsInput): Promise<GetSubmissionWithResultsOutput> {
     const { userId, submissionId } = input;
 
     const submission = await this.submissionRepo.findById(submissionId);

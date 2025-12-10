@@ -1,6 +1,6 @@
-import { PrismaClient } from "../prisma";
-import { IUserRepo } from "../../../domain/repos/IUserRepo";
-import { User } from "../../../domain/entities/User";
+import { PrismaClient } from "../../generated/prisma/client";
+import { IUserRepo } from "../../domain/repos/IUserRepo";
+import { User } from "../../domain/entities/User";
 
 export class PrismaUserRepo implements IUserRepo {
   constructor(private prisma: PrismaClient) {}
@@ -34,7 +34,7 @@ export class PrismaUserRepo implements IUserRepo {
         email: user.email,
         role: user.role,
         passwordHash: user.passwordHash,
-        updatedAt: new Date(),
+        updatedAt: user.updatedAt,
       },
       create: {
         id: user.id,

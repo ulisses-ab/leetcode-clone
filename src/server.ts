@@ -1,0 +1,45 @@
+import express from "express"
+import { json } from "body-parser";
+
+import { problemsRoutes, authRoutes, usersRoutes, submissionsRoutes } from "./di/http"
+import { submissionTimeoutService, temporarySubmissionCleanupService } from "./di/application"
+
+import dotenv from "dotenv";
+dotenv.config();
+
+const PORT = process.env.PORT!;
+
+const TEMPORARY_SUBMISSION_EXPIRATION_MS = 1000*60*5;
+const SUBMISSION_TIMEOUT_MS = 1000*30;
+const SERVICE_EXECUTION_INTERVAL_MS = 1000*10;
+
+async function bootstrap() {
+  const app = express();
+
+  app.use(json());
+
+  app.use("/problems", problemsRoutes);
+  app.use("/auth", authRoutes);
+  app.use("/users", usersRoutes);
+  app.use("/submissions", submissionsRoutes);
+
+  setInterval(async () => {
+    try {
+      const promises = [
+        temporarySubmissionCleanupService.cleanupTemporarySubmissions(TEMPORARY_SUBMISSION_EXPIRATION_MS),
+        submissionTimeoutService.markTimedOutSubmissions(SUBMISSION_TIMEOUT_MS),
+      ];
+
+      await Promise.all(promises);
+    }
+    catch (error) {
+      console.error("Service error: ", error);
+    }
+  }, SERVICE_EXECUTION_INTERVAL_MS);
+
+  app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`)
+  })
+}
+
+bootstrap();

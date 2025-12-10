@@ -1,5 +1,5 @@
 import 'bcrypt';
-import { IHashingService } from '../../application/services/IHashingService';
+import { IHashingService } from '../../application/services/interfaces/IHashingService';
 import bcrypt from 'bcrypt';
 
 export class BcryptHashingService implements IHashingService {

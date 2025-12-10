@@ -1,10 +1,10 @@
 import express from 'express';
-import { UserController } from '../controllers/UserController';
+import { UsersController } from '../controllers/UsersController';
 import { Middleware } from '../middleware/Middleware';
 
-export function createSubmissionsRoutes(
+export function createUsersRoutes(
   authMiddleware: Middleware, 
-  userController: UserController
+  userController: UsersController
 ) {
   const router = express.Router();
 

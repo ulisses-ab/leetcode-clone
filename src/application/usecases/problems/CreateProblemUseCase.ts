@@ -3,7 +3,7 @@ import { ProblemDTO } from "../../dtos/ProblemDTO";
 import { mapProblemToDTO } from "../../mappers/mapProblemToDTO";
 import { IProblemRepo } from "../../../domain/repos/IProblemRepo";
 import { IUserRepo } from "../../../domain/repos/IUserRepo";
-import { IUUIDService } from "../../services/IUUIDService";
+import { IUUIDService } from "../../services/interfaces/IUUIDService";
 import { Difficulty } from "../../../domain/types/Difficulty";
 import { AppError } from "../../errors/AppError";
 import { ErrorCode } from "../../errors/ErrorCode";

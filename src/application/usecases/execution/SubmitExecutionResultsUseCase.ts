@@ -1,6 +1,6 @@
 import { ISubmissionRepo } from "../../../domain/repos/ISubmissionRepo";
 import { IUserRepo } from "../../../domain/repos/IUserRepo";
-import { IObjectStorageService } from "../../services/IObjectStorageService";
+import { IObjectStorageService } from "../../services/interfaces/IObjectStorageService";
 import { assertUserIsRole } from "../../helpers/assertUserIsRole";
 import { Role } from "../../../domain/types/Role";
 import { AppError } from "../../errors/AppError";

@@ -1,8 +1,8 @@
 import { UserDTO } from "../../dtos/UserDTO"
 import { mapUserToDTO } from "../../mappers/mapUserToDTO"
 import { IUserRepo } from "../../../domain/repos/IUserRepo"
-import { IJWTService } from "../../services/IJWTService"
-import { IHashingService } from "../../services/IHashingService"
+import { IJWTService } from "../../services/interfaces/IJWTService"
+import { IHashingService } from "../../services/interfaces/IHashingService"
 import { AppError } from "../../errors/AppError"
 import { ErrorCode } from "../../errors/ErrorCode"
 

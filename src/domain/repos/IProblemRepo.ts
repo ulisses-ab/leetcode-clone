@@ -3,7 +3,7 @@ import { Difficulty } from "../types/Difficulty";
 import { Language } from "../types/Language";
 
 export interface IProblemRepo {
-  findById(id: string): Promise<Problem>;
+  findById(id: string): Promise<Problem | null>;
   findFiltered(
     limit?: number,
     offset?: number,
