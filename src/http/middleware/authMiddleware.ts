@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { IJWTService } from '../../application/services/IJWTService';
-import { Middleware } from '../types.ts/Middleware';
+import { Middleware } from './Middleware';
 
 export interface AuthenticatedRequest extends Request {
   user?: string;

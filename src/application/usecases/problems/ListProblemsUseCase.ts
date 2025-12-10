@@ -25,8 +25,8 @@ export class ListProblemsUseCase {
     const { limit, language,  offset, difficulty, searchText } = input;
 
     const problems = await this.problemRepo.findFiltered(
-      limit,
-      offset,
+      limit || 10,
+      offset || 0,
       searchText,
       difficulty,
       language,

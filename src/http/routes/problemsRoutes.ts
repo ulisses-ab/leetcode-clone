@@ -1,40 +1,49 @@
 import express from 'express';
 import { ProblemsController } from '../controllers/ProblemsController';
-import { Middleware } from '../types.ts/Middleware';
+import { SubmissionsController } from '../controllers/SubmissionsController';
+import { Middleware } from '../middleware/Middleware';
 
-export function createProblemsRoutes(authMiddleware: Middleware, controller: ProblemsController) {
+export function createProblemsRoutes(
+  authMiddleware: Middleware, 
+  problemsController: ProblemsController, 
+  submissionsController: SubmissionsController
+) {
   const router = express.Router();
 
   router.get('/', 
-    controller.listProblems.bind(controller)
+    problemsController.listProblems.bind(problemsController)
   );
   router.get('/:problemId', 
-    controller.getProblem.bind(controller)
+    problemsController.getProblem.bind(problemsController)
   );
   router.get('/:problemId/setups/:setupId/tests', 
-    controller.getTestsForDisplay.bind(controller)
+    problemsController.getTestsForDisplay.bind(problemsController)
   );
 
+  router.post('/:problemId/setups/:setupId/submissions', 
+    authMiddleware,
+    submissionsController.makeSubmission.bind(submissionsController)
+  );
   router.get('/:problemId/setups/:setupId/submissions',
     authMiddleware,
-    controller.getAllSubmissionsForSetup.bind(controller)
+    submissionsController.getAllSubmissionsForSetup.bind(submissionsController)
   );
   
   router.post('/', 
     authMiddleware,
-    controller.createProblem.bind(controller)
+    problemsController.createProblem.bind(problemsController)
   );
   router.post('/:problemId/setups', 
     authMiddleware, 
-    controller.addProblemSetup.bind(controller)
+    problemsController.addProblemSetup.bind(problemsController)
   );
   router.post('/:problemId/setups/:setupId/tests', 
     authMiddleware, 
-    controller.submitTestsFile.bind(controller)
+    problemsController.submitTestsFile.bind(problemsController)
   );
   router.post('/:problemId/setups/:setupId/runner',
     authMiddleware,
-    controller.submitRunnerFile.bind(controller)
+    problemsController.submitRunnerFile.bind(problemsController)
   );
 
   return router;

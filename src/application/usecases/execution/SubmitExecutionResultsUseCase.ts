@@ -1,4 +1,3 @@
-import { assert } from "console";
 import { ISubmissionRepo } from "../../../domain/repos/ISubmissionRepo";
 import { IUserRepo } from "../../../domain/repos/IUserRepo";
 import { IObjectStorageService } from "../../services/IObjectStorageService";
@@ -11,7 +10,7 @@ import { SubmissionStatus } from "../../../domain/types/SubmissionStatus";
 export type SubmitExecutionResultsInput = {
   userId: string,
   submissionId: string,
-  resultsFileBuffer: Buffer,
+  fileContent: Buffer,
   status: SubmissionStatus, 
 }
 
@@ -25,7 +24,7 @@ export class SubmitExecutionResultsUseCase {
   ) {}
 
   public async execute(input: SubmitExecutionResultsInput): Promise<SubmitExecutionResultsOutput> {
-    const { userId, submissionId, resultsFileBuffer, status } = input;
+    const { userId, submissionId, fileContent, status } = input;
 
     assertUserIsRole(userId, Role.EXECUTION_ENGINE, this.userRepo);
 
@@ -43,7 +42,7 @@ export class SubmitExecutionResultsUseCase {
     }
 
     const resultsFileKey = `submissions/${submissionId}/results`;
-    await this.objectStorageService.upload(resultsFileKey, resultsFileBuffer);
+    await this.objectStorageService.upload(resultsFileKey, fileContent);
 
     submission.resultsFileKey = resultsFileKey;
     submission.status = status;
