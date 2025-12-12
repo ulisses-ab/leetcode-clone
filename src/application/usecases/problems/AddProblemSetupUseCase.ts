@@ -24,9 +24,9 @@ export type AddProblemSetupOutput = {
 
 export class AddProblemSetupUseCase {
   constructor(
-    private problemRepo: IProblemRepo,
-    private userRepo: IUserRepo,
-    private uuidService: IUUIDService,
+    private readonly problemRepo: IProblemRepo,
+    private readonly userRepo: IUserRepo,
+    private readonly uuidService: IUUIDService,
   ) {}
 
   public async execute(input: AddProblemSetupInput): Promise<AddProblemSetupOutput> {

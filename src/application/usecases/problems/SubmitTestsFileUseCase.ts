@@ -17,9 +17,9 @@ export type SubmitTestsFileOutput = void;
 
 export class SubmitTestsFileUseCase {
   constructor(
-    private problemRepo: IProblemRepo,
-    private userRepo: IUserRepo,
-    private objectStorageService: IObjectStorageService,
+    private readonly problemRepo: IProblemRepo,
+    private readonly userRepo: IUserRepo,
+    private readonly objectStorageService: IObjectStorageService,
   ) {}
 
   public async execute(input: SubmitTestsFileInput): Promise<SubmitTestsFileOutput> {

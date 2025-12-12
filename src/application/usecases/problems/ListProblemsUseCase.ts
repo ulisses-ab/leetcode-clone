@@ -18,7 +18,7 @@ export type ListProblemsOutput = {
 
 export class ListProblemsUseCase {
   constructor(
-    private problemRepo: IProblemRepo,
+    private readonly problemRepo: IProblemRepo,
   ) {}
 
   public async execute(input: ListProblemsInput = {}): Promise<ListProblemsOutput> {

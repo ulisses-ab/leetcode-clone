@@ -14,7 +14,7 @@ export type GetUserOutput = {
 
 export class GetUserUseCase {
   constructor(
-    private userRepo: IUserRepo,
+    private readonly userRepo: IUserRepo,
   ) {}
 
   public async execute(input: GetUserInput): Promise<GetUserOutput> {

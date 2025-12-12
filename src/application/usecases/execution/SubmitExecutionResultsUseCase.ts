@@ -18,9 +18,9 @@ export type SubmitExecutionResultsOutput = void;
 
 export class SubmitExecutionResultsUseCase {
   constructor(
-    private submissionRepo: ISubmissionRepo,
-    private userRepo: IUserRepo,
-    private objectStorageService: IObjectStorageService,
+    private readonly submissionRepo: ISubmissionRepo,
+    private readonly userRepo: IUserRepo,
+    private readonly objectStorageService: IObjectStorageService,
   ) {}
 
   public async execute(input: SubmitExecutionResultsInput): Promise<SubmitExecutionResultsOutput> {

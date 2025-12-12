@@ -17,8 +17,8 @@ export type GetTestsForDisplayOutput = {
 
 export class GetTestsForDisplayUseCase {
   constructor(
-    private problemRepo: IProblemRepo,
-    private objectStorageService: IObjectStorageService,
+    private readonly problemRepo: IProblemRepo,
+    private readonly objectStorageService: IObjectStorageService,
   ) {}
 
   public async execute(input: GetTestsForDisplayInput): Promise<GetTestsForDisplayOutput> {

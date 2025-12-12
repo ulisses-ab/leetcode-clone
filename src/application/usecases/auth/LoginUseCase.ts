@@ -18,9 +18,9 @@ export type LoginOutput = {
 
 export class LoginUseCase {
   constructor(
-    private userRepo: IUserRepo,
-    private jwtService: IJWTService,
-    private hashingService: IHashingService,
+    private readonly userRepo: IUserRepo,
+    private readonly jwtService: IJWTService,
+    private readonly hashingService: IHashingService,
   ) {}
 
   public async execute(input: LoginInput): Promise<LoginOutput> {

@@ -22,10 +22,10 @@ export type RegisterOutput = {
 
 export class RegisterUseCase {
   constructor(
-    private userRepo: IUserRepo,
-    private jwtService: IJWTService,
-    private hashingService: IHashingService,
-    private uuidService: IUUIDService,
+    private readonly userRepo: IUserRepo,
+    private readonly jwtService: IJWTService,
+    private readonly hashingService: IHashingService,
+    private readonly uuidService: IUUIDService,
   ) {}
 
   public async execute(input: RegisterInput): Promise<RegisterOutput> {

@@ -25,12 +25,12 @@ export type MakeSubmissionOutput = {
 
 export class MakeSubmissionUseCase {
   constructor(
-    private userRepo: IUserRepo,
-    private problemRepo: IProblemRepo,
-    private objectStorageService: IObjectStorageService,
-    private uuidService: IUUIDService,
-    private submissionRepo: ISubmissionRepo,
-    private executionQueueService: IExecutionQueueService,
+    private readonly userRepo: IUserRepo,
+    private readonly problemRepo: IProblemRepo,
+    private readonly objectStorageService: IObjectStorageService,
+    private readonly uuidService: IUUIDService,
+    private readonly submissionRepo: ISubmissionRepo,
+    private readonly executionQueueService: IExecutionQueueService,
   ) {}
 
   public async execute(input: MakeSubmissionInput): Promise<MakeSubmissionOutput> {

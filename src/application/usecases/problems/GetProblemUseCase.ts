@@ -14,7 +14,7 @@ export type GetProblemOutput = {
 
 export class GetProblemUseCase {
   constructor(
-    private problemRepo: IProblemRepo,
+    private readonly problemRepo: IProblemRepo,
   ) {}
 
   public async execute(input: GetProblemInput): Promise<GetProblemOutput> {

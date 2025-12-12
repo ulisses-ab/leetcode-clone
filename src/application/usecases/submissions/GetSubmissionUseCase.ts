@@ -15,7 +15,7 @@ export type GetSubmissionOutput = {
 
 export class GetSubmissionUseCase {
   constructor(
-    private submissionRepo: ISubmissionRepo,
+    private readonly submissionRepo: ISubmissionRepo,
   ) {}
 
   public async execute(input: GetSubmissionInput): Promise<GetSubmissionOutput> {

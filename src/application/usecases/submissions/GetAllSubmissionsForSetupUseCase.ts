@@ -13,7 +13,7 @@ export type GetAllSubmissionsForSetupOutput = {
 
 export class GetAllSubmissionsForSetupUseCase {
   constructor(
-    private submissionRepo: ISubmissionRepo,
+    private readonly submissionRepo: ISubmissionRepo,
   ) {}
 
   public async execute(input: GetAllSubmissionsForSetupInput): Promise<GetAllSubmissionsForSetupOutput> {
