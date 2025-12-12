@@ -1,4 +1,4 @@
-import { GetUserUseCase } from "../../application/usecases/user/GetUserUseCase";
+import { GetUserUseCase } from "../../application/usecases/users/GetUserUseCase";
 import { Request, Response } from 'express';
 import { handleError } from "../errors/handleError";
 import { AuthenticatedRequest } from "../middleware/authMiddleware";

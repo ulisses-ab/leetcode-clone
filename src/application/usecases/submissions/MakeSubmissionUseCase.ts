@@ -57,9 +57,8 @@ export class MakeSubmissionUseCase {
     await this.objectStorageService.upload(codeFileKey, fileContent);
 
     const testsFileKey = setup.testsFileKey;
-    const runnerFileKey = setup.runnerFileKey;
 
-    if (!testsFileKey || !runnerFileKey) {
+    if (!testsFileKey) {
       throw new AppError(ErrorCode.SETUP_INCOMPLETE, "Problem setup is incomplete");
     }
     

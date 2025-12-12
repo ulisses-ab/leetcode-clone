@@ -26,7 +26,7 @@ export class SubmitExecutionResultsUseCase {
   public async execute(input: SubmitExecutionResultsInput): Promise<SubmitExecutionResultsOutput> {
     const { userId, submissionId, fileContent, status } = input;
 
-    assertUserIsRole(userId, Role.EXECUTION_ENGINE, this.userRepo);
+    await assertUserIsRole(userId, Role.EXECUTION_ENGINE, this.userRepo);
 
     if(status == SubmissionStatus.PENDING) {
       throw new AppError(ErrorCode.INVALID_INPUT, "Invalid submission status");

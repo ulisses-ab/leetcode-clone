@@ -13,6 +13,7 @@ import { assertUserIsRole } from "../../helpers/assertUserIsRole";
 export type AddProblemSetupInput = {
   userId: string,
   problemId: string,
+  runnerId: string,
   language: Language,
   info: string,
 }
@@ -29,7 +30,7 @@ export class AddProblemSetupUseCase {
   ) {}
 
   public async execute(input: AddProblemSetupInput): Promise<AddProblemSetupOutput> {
-    const { userId, problemId, language, info } = input;
+    const { userId, problemId, runnerId, language, info } = input;
     
     await assertUserIsRole(userId, Role.ADMIN, this.userRepo);
 
@@ -44,9 +45,9 @@ export class AddProblemSetupUseCase {
       problemId,
       language,
       info,
+      runnerId,
       createdAt: new Date(),
       updatedAt: new Date(),
-      runnerFileKey: null,
       testsFileKey: null,
     }
 

@@ -44,7 +44,7 @@ model ProblemSetup {
   problemId    String
   language     String
   info         String
-  runnerFileKey String? 
+  runnerId     String 
   testsFileKey  String? 
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
@@ -65,4 +65,12 @@ model Submission {
   temporary     Boolean
   submittedAt   DateTime
   finishedAt    DateTime?
+}
+
+model Runner {
+  id            String  @id @default(cuid())
+  name          String
+  description   String
+  runnerFileKey String
+  createdAt     DateTime
 }

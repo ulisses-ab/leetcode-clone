@@ -1,12 +1,12 @@
 import { Request, Response, NextFunction } from 'express';
-import { IJWTService } from '../../application/services/IJWTService';
-import { Middleware } from './Middleware';
+import { IJWTService } from '../../application/services/interfaces/IJWTService';
+import { RequestHandler } from "express";
 
 export interface AuthenticatedRequest extends Request {
   user?: string;
 }
 
-export function createAuthMiddleware(jwtService: IJWTService): Middleware {
+export function createAuthMiddleware(jwtService: IJWTService): RequestHandler {
   return (req: Request, res: Response, next: NextFunction) => {
     const authHeader = req.headers.authorization;
 

@@ -1,9 +1,8 @@
-import express from 'express';
+import express, { RequestHandler } from 'express';
 import { UsersController } from '../controllers/UsersController';
-import { Middleware } from '../middleware/Middleware';
 
 export function createUsersRoutes(
-  authMiddleware: Middleware, 
+  authMiddleware: RequestHandler, 
   userController: UsersController
 ) {
   const router = express.Router();

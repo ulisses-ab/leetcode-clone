@@ -6,7 +6,7 @@ export type ProblemSetup = {
   language: Language,
   info: string,
 
-  runnerFileKey: string | null,
+  runnerId: string,
   testsFileKey: string | null,
 
   createdAt: Date,

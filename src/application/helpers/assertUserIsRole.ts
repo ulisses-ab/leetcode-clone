@@ -11,6 +11,6 @@ export async function assertUserIsRole(userId: string, role: Role, userRepo: IUs
   }
 
   if (user.role != role) {
-    throw new AppError(ErrorCode.NOT_AUTHORIZED, "Only admins can add problem setups");
+    throw new AppError(ErrorCode.UNAUTHORIZED, `User must be ${user.role}`);
   }
 }

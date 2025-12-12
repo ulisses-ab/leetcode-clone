@@ -8,7 +8,6 @@ import { CreateProblemUseCase } from "../application/usecases/problems/CreatePro
 import { GetProblemUseCase } from "../application/usecases/problems/GetProblemUseCase";
 import { GetTestsForDisplayUseCase } from "../application/usecases/problems/GetTestsForDisplayUseCase";
 import { ListProblemsUseCase } from "../application/usecases/problems/ListProblemsUseCase";
-import { SubmitRunnerFileUseCase } from "../application/usecases/problems/SubmitRunnerFileUseCase";
 import { SubmitTestsFileUseCase } from "../application/usecases/problems/SubmitTestsFileUseCase";
 
 import { GetAllSubmissionsForSetupUseCase } from "../application/usecases/submissions/GetAllSubmissionsForSetupUseCase";
@@ -16,7 +15,9 @@ import { GetSubmissionUseCase } from "../application/usecases/submissions/GetSub
 import { GetSubmissionWithResultsUseCase } from "../application/usecases/submissions/GetSubmissionWithResultsUseCase";
 import { MakeSubmissionUseCase } from "../application/usecases/submissions/MakeSubmissionUseCase";
 
-import { GetUserUseCase } from "../application/usecases/user/GetUserUseCase";
+import { GetUserUseCase } from "../application/usecases/users/GetUserUseCase";
+
+import { CreateRunnerUseCase } from "../application/usecases/runners/CreateRunnerUseCase";
 
 import { SubmissionTimeoutService } from "../application/services/SubmissionTimeoutService";
 import { TemporarySubmissionCleanupService } from "../application/services/TemporarySubmissionCleanupService";
@@ -29,7 +30,8 @@ import {
   bcryptHashingService,
   prismaUserRepo,
   prismaProblemRepo,
-  prismaSubmissionRepo
+  prismaSubmissionRepo,
+  prismaRunnerRepo,
 } from "./infra";
 
 export const loginUsecase = new LoginUseCase(
@@ -48,7 +50,8 @@ export const registerUseCase = new RegisterUseCase(
 export const fetchExecutionFilesUseCase = new FetchExecutionFilesUseCase(
   prismaUserRepo,
   prismaSubmissionRepo,
-  prismaProblemRepo
+  prismaProblemRepo,
+  prismaRunnerRepo,
 );
 
 export const submitExecutionResultsUseCase = new SubmitExecutionResultsUseCase(
@@ -80,12 +83,6 @@ export const getTestsForDisplayUseCase = new GetTestsForDisplayUseCase(
 
 export const listProblemsUseCase = new ListProblemsUseCase(
   prismaProblemRepo
-);
-
-export const submitRunnerFileUseCase = new SubmitRunnerFileUseCase(
-  prismaProblemRepo,
-  prismaUserRepo,
-  s3ObjectStorageService
 );
 
 export const submitTestsFileUseCase = new SubmitTestsFileUseCase(
@@ -120,6 +117,13 @@ export const getUserUseCase = new GetUserUseCase(
   prismaUserRepo
 );
 
+export const createRunnerUseCase = new CreateRunnerUseCase(
+  prismaRunnerRepo,
+  uuidService,
+  prismaUserRepo,
+  s3ObjectStorageService
+);
+
 export const submissionTimeoutService = new SubmissionTimeoutService(
   prismaSubmissionRepo,
 );
@@ -128,3 +132,4 @@ export const temporarySubmissionCleanupService = new TemporarySubmissionCleanupS
   prismaSubmissionRepo,
   s3ObjectStorageService
 );
+

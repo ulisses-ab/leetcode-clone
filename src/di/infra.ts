@@ -13,11 +13,13 @@ import { S3ObjectStorageService } from "../infra/services/S3ObjectStorageService
 import { UUIDService } from "../infra/services/UUIDService";
 
 import dotenv from "dotenv";
+import { PrismaRunnerRepo } from "../infra/prisma/PrismaRunnerRepo";
 dotenv.config();
 
 export const prismaProblemRepo = new PrismaProblemRepo(prisma);
 export const prismaSubmissionRepo = new PrismaSubmissionRepo(prisma);
 export const prismaUserRepo = new PrismaUserRepo(prisma);
+export const prismaRunnerRepo = new PrismaRunnerRepo(prisma);
 
 export const bullMqExecutionQueueService = new BullMQExecutionQueueService(queue);
 export const bcryptHashingService = new BcryptHashingService(10);

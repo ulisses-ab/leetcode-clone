@@ -3,7 +3,6 @@ import { GetProblemUseCase } from '../../application/usecases/problems/GetProble
 import { ListProblemsUseCase } from '../../application/usecases/problems/ListProblemsUseCase';
 import { AddProblemSetupUseCase } from '../../application/usecases/problems/AddProblemSetupUseCase';
 import { GetTestsForDisplayUseCase } from '../../application/usecases/problems/GetTestsForDisplayUseCase';
-import { SubmitRunnerFileUseCase } from '../../application/usecases/problems/SubmitRunnerFileUseCase';
 import { SubmitTestsFileUseCase } from '../../application/usecases/problems/SubmitTestsFileUseCase';
 import { Request, Response } from 'express';
 import { AuthenticatedRequest } from '../middleware/authMiddleware';
@@ -18,7 +17,6 @@ export class ProblemsController {
     private listProblemsUseCase: ListProblemsUseCase,
     private addProblemSetupUseCase: AddProblemSetupUseCase,
     private getTestsForDisplayUseCase: GetTestsForDisplayUseCase,
-    private submitRunnerFileUseCase: SubmitRunnerFileUseCase,
     private submitTestsFileUseCase: SubmitTestsFileUseCase,
   ) {}
 
@@ -61,8 +59,8 @@ export class ProblemsController {
       const output = await this.listProblemsUseCase.execute({
         limit: limit ? Number(limit) : undefined,
         offset: offset ? Number(offset) : undefined,
-        difficulty: difficulty ? Difficulty[difficulty as string] : undefined,
-        language: language ? Language[language as string] : undefined,
+        difficulty: difficulty ? difficulty as Difficulty : undefined,
+        language: language ? language as Language : undefined,
         searchText: searchText ? String(searchText) : undefined,
       });
 
@@ -74,13 +72,14 @@ export class ProblemsController {
 
   public async addProblemSetup(req: AuthenticatedRequest, res: Response) {
     const { problemId } = req.params;
-    const { language, info } = req.body;
+    const { language, info, runnerId } = req.body;
     const userId = req.user!;
 
     try {
       const output = await this.addProblemSetupUseCase.execute({
         problemId, 
         userId,
+        runnerId,
         language,
         info,
       });
@@ -98,29 +97,6 @@ export class ProblemsController {
       const output = await this.getTestsForDisplayUseCase.execute({
         problemId, 
         setupId
-      });
-
-      return res.status(200).json(output);
-    } catch (error) {
-      handleError(error, res);
-    }
-  }
-
-  public async submitRunnerFile(req: AuthenticatedRequest, res: Response) {
-    const { problemId, setupId } = req.params;
-    const file = req.file;
-    const userId = req.user!;
-
-    if (!file) {
-      return res.status(400).json({ message: 'No file uploaded.' });
-    }
-
-    try {
-      const output = await this.submitRunnerFileUseCase.execute({
-        problemId, 
-        setupId, 
-        fileContent: file.buffer,
-        userId,
       });
 
       return res.status(200).json(output);

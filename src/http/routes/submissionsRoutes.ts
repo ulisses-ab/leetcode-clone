@@ -1,14 +1,13 @@
-import express from 'express';
+import express, { RequestHandler } from 'express';
 import { SubmissionsController } from '../controllers/SubmissionsController';
-import { Middleware } from '../middleware/Middleware';
 
 export function createSubmissionsRoutes(
-  authMiddleware: Middleware, 
+  authMiddleware: RequestHandler, 
   submissionsController: SubmissionsController
 ) {
   const router = express.Router();
 
-  router.post("/:submissionId/files",
+  router.post("/:submissionId/execution-files",
     authMiddleware,
     submissionsController.fetchExecutionFiles.bind(submissionsController)
   );

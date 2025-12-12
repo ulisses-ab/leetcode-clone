@@ -1,12 +1,13 @@
-import express from 'express';
+import express, { RequestHandler } from 'express';
 import { ProblemsController } from '../controllers/ProblemsController';
 import { SubmissionsController } from '../controllers/SubmissionsController';
-import { Middleware } from '../middleware/Middleware';
+import { Multer } from 'multer';
 
 export function createProblemsRoutes(
-  authMiddleware: Middleware, 
+  authMiddleware: RequestHandler, 
   problemsController: ProblemsController, 
-  submissionsController: SubmissionsController
+  submissionsController: SubmissionsController,
+  upload: Multer,
 ) {
   const router = express.Router();
 
@@ -39,11 +40,8 @@ export function createProblemsRoutes(
   );
   router.post('/:problemId/setups/:setupId/tests', 
     authMiddleware, 
+    upload.single("file"),
     problemsController.submitTestsFile.bind(problemsController)
-  );
-  router.post('/:problemId/setups/:setupId/runner',
-    authMiddleware,
-    problemsController.submitRunnerFile.bind(problemsController)
   );
 
   return router;

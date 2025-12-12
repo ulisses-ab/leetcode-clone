@@ -15,4 +15,5 @@ export const errorCodeHttpStatusMap: Record<ErrorCode, number> = {
   [ErrorCode.INVALID_TESTS_FILE]: 400,
   [ErrorCode.SETUP_INCOMPLETE]: 400,
   [ErrorCode.INVALID_SUBMISSION_STATE]: 400,
+  [ErrorCode.RUNNER_NOT_FOUND]: 404,
 };

@@ -7,6 +7,7 @@ import { Role } from "../../../domain/types/Role";
 import { IUserRepo } from "../../../domain/repos/IUserRepo";
 import { mapSubmissionToDTO } from "../../mappers/mapSubmissionToDTO";
 import { SubmissionDTO } from "../../dtos/SubmissionDTO";
+import { IRunnerRepo } from "../../../domain/repos/IRunnerRepo";
 
 export type FetchExecutionFilesInput = {
   userId: string;
@@ -22,15 +23,16 @@ export type FetchExecutionFilesOutput = {
 
 export class FetchExecutionFilesUseCase {
   constructor(
-    private userRepo: IUserRepo,
-    private submissionRepo: ISubmissionRepo,
-    private problemRepo: IProblemRepo,
+    private readonly userRepo: IUserRepo,
+    private readonly submissionRepo: ISubmissionRepo,
+    private readonly problemRepo: IProblemRepo,
+    private readonly runnerRepo: IRunnerRepo,
   ) {}
 
   public async execute(input: FetchExecutionFilesInput): Promise<FetchExecutionFilesOutput> {
     const { userId, submissionId } = input;
 
-    assertUserIsRole(userId, Role.EXECUTION_ENGINE, this.userRepo);
+    await assertUserIsRole(userId, Role.EXECUTION_ENGINE, this.userRepo);
 
     const submission = await this.submissionRepo.findById(submissionId);
     if (!submission) {
@@ -47,14 +49,19 @@ export class FetchExecutionFilesUseCase {
       throw new AppError(ErrorCode.SETUP_NOT_FOUND, "Problem setup not found");
     }
 
-    if (!setup.runnerFileKey || !setup.testsFileKey) {
+    const runner = await this.runnerRepo.findById(setup.runnerId);
+    if (!runner) {
+      throw new AppError(ErrorCode.RUNNER_NOT_FOUND, "Runner not found");
+    }
+
+    if (!setup.testsFileKey) {
       throw new AppError(ErrorCode.SETUP_INCOMPLETE, "Problem setup is incomplete");
     }
 
     return {
       submission: mapSubmissionToDTO(submission),
       codeFileKey: submission.codeFileKey,
-      runnerFileKey: setup.runnerFileKey,
+      runnerFileKey: runner.runnerFileKey,
       testsFileKey: setup.testsFileKey,
     }
   }

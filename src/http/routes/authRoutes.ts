@@ -1,6 +1,5 @@
 import express from 'express';
 import { AuthController } from '../controllers/AuthController';
-import { Middleware } from '../middleware/Middleware';
 
 export function createAuthRoutes(
   authController: AuthController

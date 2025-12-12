@@ -1,7 +1,7 @@
 import express from "express"
 import { json } from "body-parser";
 
-import { problemsRoutes, authRoutes, usersRoutes, submissionsRoutes } from "./di/http"
+import { problemsRoutes, authRoutes, usersRoutes, submissionsRoutes, runnersRoutes } from "./di/http"
 import { submissionTimeoutService, temporarySubmissionCleanupService } from "./di/application"
 
 import dotenv from "dotenv";
@@ -22,6 +22,7 @@ async function bootstrap() {
   app.use("/auth", authRoutes);
   app.use("/users", usersRoutes);
   app.use("/submissions", submissionsRoutes);
+  app.use("/runners", runnersRoutes);
 
   setInterval(async () => {
     try {
