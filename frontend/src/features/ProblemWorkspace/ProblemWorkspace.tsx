@@ -14,7 +14,7 @@ export function ProblemWorkspace() {
     >
       <ResizablePanel 
         className="min-w-40 m-2 mt-0 ml-2 mr-1 rounded-lg  border-1 flex"
-        defaultSize={10}
+        defaultSize={33}
       >
         <ProblemDisplayer />
       </ResizablePanel>

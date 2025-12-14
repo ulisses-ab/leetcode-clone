@@ -18,14 +18,18 @@ async function bootstrap() {
   const app = express();
 
   app.use(json());
-
-  app.use(express.static(path.join(__dirname, "../frontend/build")));
-
+  
   app.use("/api/problems", problemsRoutes);
   app.use("/api/auth", authRoutes);
   app.use("/api/users", usersRoutes);
   app.use("/api/submissions", submissionsRoutes);
   app.use("/api/runners", runnersRoutes);
+
+  const frontendDistPath = path.join(__dirname, "../../frontend/dist");
+  app.use(express.static(frontendDistPath));
+  app.use((req, res) => {
+    res.sendFile(path.join(frontendDistPath, "index.html"));
+  });
 
   setInterval(async () => {
     try {

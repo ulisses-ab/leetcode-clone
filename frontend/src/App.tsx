@@ -12,6 +12,7 @@ const App: React.FC = () => {
         <Routes>
           <Route path="/problems/:id" element={<ProblemDetail />} />
           <Route path="/problems" element={<ProblemList />} />
+          <Route path="/" element={<ProblemList />} />
         </Routes>
       </Router>
     </QueryClientProvider>

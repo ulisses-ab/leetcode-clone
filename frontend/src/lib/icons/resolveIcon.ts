@@ -1,29 +1,21 @@
 import materialIconsRaw from "./material-icons.json";
 
-const BASE = "src/assets/icons";
+const icons = import.meta.glob('../../assets/icons/file-icons/*.svg', { eager: true, import: 'default' });
 
-export function resolveIcon(
-  name?: string,
-  isFolder?: boolean,
-) {
+export function resolveIcon(name?: string, isFolder?: boolean) {
   const materialIcons = materialIconsRaw as any;
 
-  if(!name) {
-    return `${BASE}/file.svg`
+  let fileName = "file.svg";
+
+  if (!name) {
+    fileName = "file.svg";
+  } else if (isFolder) {
+    fileName = materialIcons.folderNames?.[name] ?? materialIcons.folder;
+  } else {
+    const ext = name.split(".").pop() ?? "";
+    fileName = materialIcons.fileExtensions?.[ext] ?? materialIcons.file;
   }
 
-  if (isFolder) {
-    const folderIcon =
-      materialIcons.folderNames?.[name] ??
-      materialIcons.folder;
-
-    return `${BASE}/${folderIcon}.svg`;
-  }
-
-  const ext = name.split(".").pop() ?? "";
-  const fileIcon =
-    materialIcons.fileExtensions?.[ext] ??
-    materialIcons.file;
-
-  return `${BASE}/${fileIcon}.svg`;
+  const key = `../../assets/icons/file-icons/${fileName}.svg`;
+  return icons[key];
 }
