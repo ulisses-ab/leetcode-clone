@@ -1,0 +1,52 @@
+import { Editor, useMonaco } from "@monaco-editor/react";
+import { parseTmTheme } from 'monaco-themes';
+import { useWorkspaceStore } from "../../store/store";
+import { FileBreadcrumb } from "./FileBreadcrumb";
+
+function handleMount(editor: any, monaco: any) {
+  monaco.languages.registerCompletionItemProvider("cpp");
+
+  monaco.editor.defineTheme("my-dark", {
+    base: "vs-dark",
+    inherit: true,
+    rules: [],
+    colors: {
+      "editor.background": "#121318ff",
+      "editorLineNumber.foreground": "#858585",
+      "editorCursor.foreground": "#ffffff",
+    },
+  });
+  monaco.editor.setTheme("my-dark");
+}
+
+export function CodeEditor({ language = "cpp" }: { 
+  language?: string 
+}) {
+  const nodes = useWorkspaceStore((state) => state.nodes);
+  const activeFileId = useWorkspaceStore((state) => state.activeFileId);
+  const updateFileContent = useWorkspaceStore((state) => state.updateFileContent);
+
+  if(!activeFileId) {
+    return (
+      <div>Select file to start...</div>
+    )
+  }
+
+  return (
+    <>
+      <FileBreadcrumb />
+      <Editor
+        defaultLanguage={language}
+        value={nodes[activeFileId].content}
+        onChange={(v) => updateFileContent(activeFileId, v ?? "")}
+        onMount={handleMount}
+        options={{
+          minimap: { enabled: false },
+          fontSize: 14,
+          tabSize: 2,
+          scrollBeyondLastLine: false,
+        }}
+      />
+    </>
+  );
+}
