@@ -10,6 +10,7 @@ const createWorkspaceStore: StateCreator<WorkspaceState> = (set, get) => ({
   rootId: null,
   activeFileId: null,
   selectedNodeId: null,
+  triggerRenameId: null,
 
   initialize: (persistanceKey, templateNodes, templateRootId) => {
     const persisted = loadWorkspace(persistanceKey);
@@ -52,13 +53,29 @@ const createWorkspaceStore: StateCreator<WorkspaceState> = (set, get) => ({
     selectedNodeId: id 
   }),
 
-  createFile: (parentId, name) => set((state) => ({
-    nodes: tree.createFile(state.nodes, parentId, name),
-  })),
+  triggerRename: (id) => set({
+    triggerRenameId: id,
+  }),
 
-  createFolder: (parentId, name) => set((state) => ({
-    nodes: tree.createFolder(state.nodes, parentId, name),
-  })),
+  createFile: (parentId, name) => set((state) => {
+    const { nodes, id } = tree.createFile(state.nodes, parentId, name);
+
+    return {
+      nodes,
+      selectedNodeId: id,
+      isRenaming: true,
+    }
+  }),
+
+  createFolder: (parentId, name) => set((state) => {
+    const { nodes, id } = tree.createFolder(state.nodes, parentId, name);
+
+    return {
+      nodes,
+      selectedNodeId: id,
+      isRenaming: true,
+    }
+  }),
 
   updateFileContent: (id, content) => set((state) => ({
     nodes: tree.updateFileContent(state.nodes, id, content),

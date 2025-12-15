@@ -34,25 +34,31 @@ export const createFile = (
   nodes: Record<string, FileNode>,
   parentId: string,
   name: string,
-): Record<string, FileNode> => {
+): { 
+  id: string | null,
+  nodes: Record<string, FileNode>,
+} => {
   const id = crypto.randomUUID();
   const parent = nodes[parentId];
-  if (!parent || parent.type !== "folder") return nodes;
+  if (!parent || parent.type !== "folder") return { id: null, nodes };
 
   return { 
-    ...nodes,
+    id,
+    nodes: {
+      ...nodes,
 
-    [parentId]: {
-      ...parent,
-      children: [...(parent.children ?? []), id]
-    },
+      [parentId]: {
+        ...parent,
+        children: [...(parent.children ?? []), id]
+      },
 
-    [id]: {
-      id,
-      name,
-      type: "file",
-      parentId,
-      content: "",
+      [id]: {
+        id,
+        name,
+        type: "file",
+        parentId,
+        content: "",
+      }
     }
   };
 }
@@ -61,25 +67,31 @@ export const createFolder = (
   nodes: Record<string, FileNode>,
   parentId: string,
   name: string,
-): Record<string, FileNode> => {
+): { 
+  id: string | null,
+  nodes: Record<string, FileNode>,
+} => {
   const id = crypto.randomUUID();
   const parent = nodes[parentId];
-  if (!parent || parent.type !== "folder") return nodes;
+  if (!parent || parent.type !== "folder") return { id: null, nodes };
 
   return {  
-    ...nodes,
+    id,
+    nodes: {
+      ...nodes,
 
-    [parentId]: {
-      ...parent,
-      children: [...(parent.children ?? []), id]
-    },
+      [parentId]: {
+        ...parent,
+        children: [...(parent.children ?? []), id]
+      },
 
-    [id]: {
-      id,
-      name,
-      type: "folder",
-      parentId,
-      children: [],
+      [id]: {
+        id,
+        name,
+        type: "folder",
+        parentId,
+        children: [],
+      }
     }
   }; 
 }

@@ -28,7 +28,11 @@ export function CodeEditor({ language = "cpp" }: {
 
   if(!activeFileId) {
     return (
-      <div>Select file to start...</div>
+      <div className="flex h-full items-center justify-center">
+        <div className="">
+          Select file...
+        </div>
+      </div>
     )
   }
 

@@ -21,6 +21,7 @@ export type WorkspaceState = {
   rootId: string | null;
   activeFileId: string | null;
   selectedNodeId: string | null;
+  triggerRenameId: string | null;
 
   initialize: (
     persistanceKey: string,
@@ -29,9 +30,9 @@ export type WorkspaceState = {
   ) => void;
 
   setNodes: (nodes: Record<string, FileNode>, rootId: string) => void;
-
   setActiveFile: (id: string | null) => void;
   setSelectedNode: (id: string | null) => void;
+  triggerRename: (id: string | null) => void;
   createFile: (parentId: string, name: string) => void;
   createFolder: (parentId: string, name: string) => void;
   updateFileContent: (id: string, content: string) => void;

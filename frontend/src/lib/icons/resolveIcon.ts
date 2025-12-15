@@ -5,10 +5,10 @@ const icons = import.meta.glob('../../assets/icons/file-icons/*.svg', { eager: t
 export function resolveIcon(name?: string, isFolder?: boolean) {
   const materialIcons = materialIconsRaw as any;
 
-  let fileName = "file.svg";
+  let fileName = "file";
 
   if (!name) {
-    fileName = "file.svg";
+    fileName = "file";
   } else if (isFolder) {
     fileName = materialIcons.folderNames?.[name] ?? materialIcons.folder;
   } else {

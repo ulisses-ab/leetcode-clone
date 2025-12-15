@@ -48,7 +48,9 @@ export function Workspace({ persistanceKey, zip }: {
         <FileExplorer />
       </ResizablePanel>
       <ResizableHandle />
-      <ResizablePanel>
+      <ResizablePanel
+        className="bg-[#121318]"
+      >
         <CodeEditor />
       </ResizablePanel>
     </ResizablePanelGroup>

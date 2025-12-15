@@ -1,11 +1,13 @@
-import { TbFilePlus } from "react-icons/tb";
-import { useWorkspaceStore } from "../../store/store";
+import { TbFolderPlus, TbFilePlus } from "react-icons/tb";
+import { useWorkspaceStore } from "../../../store/store";
 
-export function AddFileButton() {
+export function AddNodeButton({ type }: { type: "folder" | "file" }) {
   const nodes = useWorkspaceStore((state) => state.nodes);
   const rootId = useWorkspaceStore((state) => state.rootId);
   const selectedNodeId = useWorkspaceStore((state) => state.selectedNodeId);
+  const createFolder = useWorkspaceStore((state) => state.createFolder);
   const createFile = useWorkspaceStore((state) => state.createFile);
+
 
   const handleAdd = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -22,18 +24,23 @@ export function AddFileButton() {
         selectedNode.id :
         selectedNode.parentId;
 
-    createFile(parentId!, "aura.csv");
-
-    console.log("aura");
+    type === "file" ?
+      createFile(parentId!, "") :
+      createFolder(parentId!, "")
   };
 
   return (
     <button
       onClick={handleAdd}
       className="flex items-center gap-1 text-xs text-[#bbbbbb] hover:bg-[#2a2d2e] rounded"
-      title="Add new file"
+      title="Add new folder"
     >
-      <TbFilePlus size={18} />
+      {type === "file" ? (
+        <TbFilePlus size={18} />
+      ) : (
+        <TbFolderPlus size={18} />
+      )}
+
     </button>
   );
 }
