@@ -1,57 +1,60 @@
-import { CodeEditor } from "./components/CodeEditor/CodeEditor";
-import { FileExplorer } from "./components/FileExplorer/FIleExplorer";
 import {
   ResizableHandle,
   ResizablePanel,
   ResizablePanelGroup,
 } from "@/components/ui/resizable"
-import { useWorkspaceStore } from "./store/store";
-import type { FileNode } from "./store/types";
+import { useProblem } from "@/api/hooks/problems"
+import { LeftSide } from "./LeftSide";
+import { RightSide } from "./RightSide";
+import { useNavbarStore } from "@/stores/useNavbarStore";
 import { useEffect } from "react";
-import { useImperativeHandle } from "react";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 
-const sampleNodes: Record<string, FileNode> = {
-  "1": { id: "1", name: "root", type: "folder", parentId: null, children: ["2", "3"] },
-  "2": { id: "2", name: "src", type: "folder", parentId: "1", children: ["4"] },
-  "3": { id: "3", name: "package.json", type: "file", parentId: "1" },
-  "4": { id: "4", name: "index.tsx", type: "file", parentId: "2" },
-};
-
-export function Workspace({ persistanceKey, zip }: {
-  persistanceKey: string,
-  zip?: Blob,
-}) {
-  const initialize = useWorkspaceStore((state) => state.initialize);
-  const nodes = useWorkspaceStore((state) => state.nodes);
-  const rootId = useWorkspaceStore((state) => state.rootId);
-
+export function Workspace({ problemId }: { problemId: string }) {
+  const { data: problem } = useProblem(problemId);
+  const setNavbarCenter = useNavbarStore((state) => state.setNavbarCenter);
+  
   useEffect(() => {
-    initialize(persistanceKey, sampleNodes, "1");
-  }, [initialize])
-
-
-  /* useImperativeHandle(ref, () => ({
-    getCurrentZip: () => {
-      return zipNodes(nodes, rootId);
-    }
-  }), [nodes, rootId]); */
+    setNavbarCenter(
+      <div className="flex space-x-2">
+        <Select>
+          <SelectTrigger>
+            <SelectValue placeholder="Language" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="light">C++</SelectItem>
+            <SelectItem value="dark">Java</SelectItem>
+            <SelectItem value="system">JavaScript</SelectItem>
+          </SelectContent>
+        </Select>
+        <div className="bg-gray-700 rounded-lg px-2 py-1">Run</div>
+        <div className="bg-green-600 rounded-lg px-2 py-1">Submit</div>
+      </div>
+    )
+  }, [])
 
   return (
     <ResizablePanelGroup 
       direction="horizontal" 
-      className="flex-1 overflow-auto border-none bg-card"
+      className="flex-1"
     >
       <ResizablePanel 
-        className="min-w-40"
-        defaultSize={10}
+        className="min-w-40 m-2 mt-0 ml-2 mr-1 rounded-lg flex"
+        defaultSize={33}
       >
-        <FileExplorer />
+        <LeftSide problem={problem ?? undefined} />
       </ResizablePanel>
-      <ResizableHandle />
-      <ResizablePanel
-        className="bg-[#121318]"
+      <ResizableHandle className="bg-transparent"/>
+      <ResizablePanel 
+        className="min-w-40 m-2 mt-0 mr-2 ml-1 flex rounded-lg"
       >
-        <CodeEditor />
+        <RightSide setupId={"aura"} />
       </ResizablePanel>
     </ResizablePanelGroup>
   )

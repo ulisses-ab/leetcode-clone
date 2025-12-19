@@ -1,8 +1,7 @@
 import multer from "multer";
 
 import {
-  loginUsecase,
-  registerUseCase,
+  oAuthCallbackUseCase,
   fetchExecutionFilesUseCase,
   submitExecutionResultsUseCase,
   addProblemSetupUseCase,
@@ -35,9 +34,15 @@ import { createProblemsRoutes } from "../http/routes/problemsRoutes"
 import { createUsersRoutes } from "../http/routes/usersRoutes"
 import { createRunnersRoutes } from "../http/routes/runnersRoutes";
 
+import { googleOAuthClient } from "./infra";
+
+import dotenv from "dotenv";
+dotenv.config();
+
 export const authController = new AuthController(
-  loginUsecase, 
-  registerUseCase
+  oAuthCallbackUseCase,
+  googleOAuthClient,
+  process.env.FRONTEND_OAUTH_REDIRECT_URL!
 );
 
 export const problemsController = new ProblemsController(

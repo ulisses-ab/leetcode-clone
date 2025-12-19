@@ -6,12 +6,12 @@ export function createAuthRoutes(
 ) {
   const router = express.Router();
 
-  router.post("/login",
-    authController.login.bind(authController)
+  router.get("/google",
+    authController.google.bind(authController)
   );
 
-  router.post("/register",
-    authController.register.bind(authController)
+  router.get("/google/callback",
+    authController.googleCallback.bind(authController)
   );
 
   return router;

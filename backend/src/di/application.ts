@@ -1,5 +1,4 @@
-import { LoginUseCase } from "../application/usecases/auth/LoginUseCase";
-import { RegisterUseCase } from "../application/usecases/auth/RegisterUseCase";
+import { OAuthCallbackUseCase } from "../application/usecases/auth/OAuthCallbackUseCase";
 import { FetchExecutionFilesUseCase } from "../application/usecases/execution/FetchExecutionFilesUseCase";
 import { SubmitExecutionResultsUseCase } from "../application/usecases/execution/SubmitExecutionResultsUseCase";
 
@@ -32,20 +31,17 @@ import {
   prismaProblemRepo,
   prismaSubmissionRepo,
   prismaRunnerRepo,
+  prismaOAuthIdentityRepo,
+  oAuthService,
 } from "./infra";
 
-export const loginUsecase = new LoginUseCase(
+export const oAuthCallbackUseCase = new OAuthCallbackUseCase(
   prismaUserRepo,
   jwtService,
-  bcryptHashingService
-);
-
-export const registerUseCase = new RegisterUseCase(
-  prismaUserRepo,
-  jwtService,
-  bcryptHashingService,
-  uuidService
-);
+  oAuthService,
+  uuidService,
+  prismaOAuthIdentityRepo
+)
 
 export const fetchExecutionFilesUseCase = new FetchExecutionFilesUseCase(
   prismaUserRepo,

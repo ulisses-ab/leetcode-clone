@@ -1,16 +1,12 @@
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
-import { useAuthStore } from "@/features/auth/auth.store";
+import { useAuthStore } from "@/features/auth/store";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { SignInButton } from "@/features/auth/SignInButton";
 import { Button } from "@/components/ui/button";
 
 export function UserMenu() {
   const user = useAuthStore(store => store.user);
-  const isLoading = useAuthStore(store => store.isLoading);
-
-  if(isLoading) {
-    return <div>Loading...</div>
-  }
+  const logout = useAuthStore(store => store.logout);
 
   if(!user) {
     return (
@@ -33,7 +29,7 @@ export function UserMenu() {
         <DropdownMenuContent>
           <DropdownMenuItem>Profile</DropdownMenuItem>
           <DropdownMenuItem>Settings</DropdownMenuItem>
-          <DropdownMenuItem>Logout</DropdownMenuItem>
+          <DropdownMenuItem onClick={logout}>Logout</DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
     </div>

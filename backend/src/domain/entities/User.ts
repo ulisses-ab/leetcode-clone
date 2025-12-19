@@ -3,9 +3,8 @@ import { Role } from "../types/Role"
 export type User = {
   id: string,
   handle: string,
-  email: string,
   role: Role,
-  passwordHash: string,
+  email: string,
   createdAt: Date,
   updatedAt: Date,
 }

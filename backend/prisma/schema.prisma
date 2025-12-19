@@ -18,11 +18,27 @@ model User {
   handle       String    @unique
   email        String    @unique
   role         String
-  passwordHash String
   createdAt    DateTime  @default(now())
   updatedAt    DateTime  @updatedAt
   submissions  Submission[]
   problems     Problem[] @relation("CreatedProblems")
+
+  oAuthIdentities OAuthIdentity[] 
+}
+
+model OAuthIdentity {
+  id              String        @id @default(cuid())
+  userId          String
+
+  provider        String
+  providerUserId  String
+
+  createdAt       DateTime      @default(now())
+
+  user            User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerUserId])
+  @@index([userId])
 }
 
 model Problem {

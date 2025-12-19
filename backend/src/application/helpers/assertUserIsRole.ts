@@ -11,6 +11,6 @@ export async function assertUserIsRole(userId: string, role: Role, userRepo: IUs
   }
 
   if (user.role != role) {
-    throw new AppError(ErrorCode.UNAUTHORIZED, `User must be ${user.role}`);
+    throw new AppError(ErrorCode.UNAUTHORIZED, `User must be ${role}`);
   }
 }

@@ -1,7 +1,14 @@
-import { Button } from "@/components/ui/button"
+import { useParams } from "react-router-dom"
+import { Navbar } from "@/components/layout/Navbar/Navbar";
+import { Workspace } from "@/features/Workspace/Workspace";
 
 export function ProblemDetail() {
-  return <>
+  const { id } = useParams<{ id: string }>();
 
+  return <>
+    <div className="h-screen flex flex-col">
+      <Navbar />
+      <Workspace problemId={id!} />
+    </ div>
   </>
 }

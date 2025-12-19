@@ -17,8 +17,9 @@ export function createAuthMiddleware(jwtService: IJWTService): RequestHandler {
     try {
       const token = authHeader.split(' ')[1];
       const decoded = jwtService.verify(token) as { sub: string };
-      (req as AuthenticatedRequest).user = decoded.sub;
 
+      (req as AuthenticatedRequest).user = decoded.sub;
+    
       next();
     } catch (error) {
       return res.status(401).json({ message: 'Invalid or expired token.' });

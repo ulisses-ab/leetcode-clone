@@ -12,17 +12,11 @@ export class PrismaUserRepo implements IUserRepo {
     return user ? this.mapPrismaUser(user) : null;
   }
 
-  async findByEmail(email: string): Promise<User | null> {
-    const user = await this.prisma.user.findUnique({
-      where: { email },
-    });
-    return user ? this.mapPrismaUser(user) : null;
-  }
-
   async findByHandle(handle: string): Promise<User | null> {
     const user = await this.prisma.user.findUnique({
       where: { handle },
     });
+
     return user ? this.mapPrismaUser(user) : null;
   }
 
@@ -33,7 +27,6 @@ export class PrismaUserRepo implements IUserRepo {
         handle: user.handle,
         email: user.email,
         role: user.role,
-        passwordHash: user.passwordHash,
         updatedAt: user.updatedAt,
       },
       create: {
@@ -41,12 +34,17 @@ export class PrismaUserRepo implements IUserRepo {
         handle: user.handle,
         email: user.email,
         role: user.role,
-        passwordHash: user.passwordHash,
         createdAt: user.createdAt,
         updatedAt: user.updatedAt,
       },
     });
   }
+
+  async deleteById(id: string): Promise<void> {
+    await this.prisma.user.delete({
+      where: { id }
+    })
+  } 
 
   private mapPrismaUser(user: any): User {
     return {
@@ -54,7 +52,6 @@ export class PrismaUserRepo implements IUserRepo {
       handle: user.handle,
       email: user.email,
       role: user.role,
-      passwordHash: user.passwordHash,
       createdAt: user.createdAt,
       updatedAt: user.updatedAt,
     };

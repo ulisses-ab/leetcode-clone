@@ -1,3 +1,4 @@
+import { useOAuth } from "@/api/hooks/oauth"
 import { Button } from "@/components/ui/button"
 import {
   Card,
@@ -12,6 +13,8 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 
 export function SignInCard() {
+  const { google } = useOAuth();
+  
   return (
     <Card className="w-full max-w-sm">
       <CardHeader>
@@ -54,7 +57,7 @@ export function SignInCard() {
         <Button type="submit" className="w-full">
           Login
         </Button>
-        <Button variant="outline" className="w-full">
+        <Button variant="outline" onClick={google} className="w-full">
           Login with Google
         </Button>
       </CardFooter>

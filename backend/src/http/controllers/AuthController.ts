@@ -1,40 +1,38 @@
-import { LoginUseCase } from '../../application/usecases/auth/LoginUseCase';
-import { RegisterUseCase } from '../../application/usecases/auth/RegisterUseCase';
+import { OAuthCallbackUseCase } from '../../application/usecases/auth/OAuthCallbackUseCase';
 import { Request, Response } from 'express';
 import { handleError } from '../errors/handleError';
+import { OAuthProvider } from '../../domain/types/OAuthProvider';
+import { IOAuthClient } from '../../infra/services/oauth/IOAuthClient';
 
 export class AuthController {
   constructor(
-    private loginUseCase: LoginUseCase,
-    private registerUseCase: RegisterUseCase,
+    private readonly oAuthCallbackUseCase: OAuthCallbackUseCase,
+    private readonly googleOAuthClient: IOAuthClient,
+    private readonly frontendOAuthRedirect: string,
   ) {}
 
-  public async login(req: Request, res: Response) {
-    const { identifier, password } = req.body;
+  public async google(req: Request, res: Response) {
+    const state = (req.query.state ?? "") as string;
 
-    try {
-      const output = await this.loginUseCase.execute({
-        identifier,
-        password
-      });
 
-      return res.status(201).json(output);
-    } catch (error) {
-      handleError(error, res);
-    }
+    res.redirect(this.googleOAuthClient.getAuthUrl(state));
   }
 
-  public async register(req: Request, res: Response) {
-    const { email, handle, password } = req.body;
+  public async googleCallback(req: Request, res: Response) {
+    this.callback(req, res, OAuthProvider.GOOGLE);
+  }
+
+  private async callback(req: Request, res: Response, provider: OAuthProvider) {
+    const state = req.query.state ?? "";
+    const code = req.query.code as string;
 
     try {
-      const output = await this.registerUseCase.execute({ 
-        email,
-        handle,
-        password 
+      const output = await this.oAuthCallbackUseCase.execute({
+        provider,
+        code
       });
 
-      return res.status(200).json(output);
+      return res.redirect(`${this.frontendOAuthRedirect}?token=${output.token}&state=${state}`);
     } catch (error) {
       handleError(error, res);
     }

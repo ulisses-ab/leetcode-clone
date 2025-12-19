@@ -1,4 +1,6 @@
-const url = "http://localhost:3030/auth/register";
+import fs from "fs";
+
+const url = "http://localhost:3030/api/auth/register";
 
 async function main() {
   const payload = {
@@ -17,6 +19,8 @@ async function main() {
 
   const data = await res.json();
   console.log("Response:", data);
+
+  fs.writeFileSync("tests/token.txt", data.token);
 }
 
 main().catch(console.error);

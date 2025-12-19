@@ -1,6 +1,7 @@
 import express from "express"
 import { json } from "body-parser";
 import path from "path";
+import cors from "cors";
 
 import { problemsRoutes, authRoutes, usersRoutes, submissionsRoutes, runnersRoutes } from "./di/http"
 import { submissionTimeoutService, temporarySubmissionCleanupService } from "./di/application"
@@ -16,6 +17,11 @@ const SERVICE_EXECUTION_INTERVAL_MS = 1000*10;
 
 async function bootstrap() {
   const app = express();
+
+  app.use(cors({
+    origin: "http://localhost:5173",
+    credentials: true
+  }));
 
   app.use(json());
   
